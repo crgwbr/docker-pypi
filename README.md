@@ -10,20 +10,20 @@ Usage
 If you're not dealing with the Git repo but running the container directly from
 the Docker index, you can use commands such as the following:
 
-    sudo mkdir -p /srv/pypi             # local directory where packages reside
-    sudo touch /srv/pypi/.htaccess      # credentials file for adding packages
-    docker run -t -i --rm \             # remove container when stopped
-        -h pypi.local \                 # hostname
-        -v /srv/pypi:/srv/pypi:rw \     # host packages from local directory
-        -p 8080:8000 \                  # expose port 8000 as port 8080
+    mkdir -p ./_data                    # local directory where packages reside
+    touch ./_data/.htaccess             # credentials file for adding packages
+    docker run \
+        --rm \                          # remove container when stopped
+        -v ./_data:/srv/pypi:rw \       # host packages from local directory
+        -p 8000:8000 \                  # expose port 8000
         --name pypi \                   # container name
-        codekoala/pypi                  # docker repository
+        crgwbr/docker-pypi:latest       # docker repository
 
-Once running, you should be able to visit http://localhost:8080 to see the
+Once running, you should be able to visit http://localhost:8000 to see the
 landing page for your very own PyPI server.
 
 You can add Python packages to the server simply by including the tarballs,
-zips, wheels, eggs, etc in your `/srv/pypi` directory.
+zips, wheels, eggs, etc in your `./_data/` directory.
 
 Building Your Own
 -----------------

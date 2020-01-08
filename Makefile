@@ -1,10 +1,15 @@
 build:
-	docker build -t codekoala/pypi .
+	docker build -t crgwbr/docker-pypi:latest .
 
 run:
-	sudo mkdir -p /srv/pypi
-	sudo cp ./htaccess /srv/pypi/.htaccess
-	docker run -t -i --rm -h pypi.local -v /srv/pypi:/srv/pypi:rw -p 8080:8000 --name pypi codekoala/pypi
+	mkdir -p ./_data && \
+	touch ./_data/.htaccess && \
+	docker run -d --rm \
+		-h pypi.local \
+		-v $(pwd)/_data:/srv/pypi:rw \
+		-p 8000:8000 \
+		--name pypi \
+		crgwbr/docker-pypi:latest
 
 clean:
-	docker rmi `docker images -q codekoala/pypi`
+	docker rmi $(docker images -q crgwbr/docker-pypi)
